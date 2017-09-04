@@ -1,4 +1,4 @@
-# iron-socket-io-client [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/Collaborne/iron-socket-io-client)
+# iron-socket-io-client [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Collaborne/iron-socket-io-client)
 Polymer element to connect to socket-IO
 
 This element uses Polymer 2 native classes (ES6 syntax).
