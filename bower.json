@@ -1,0 +1,28 @@
+{
+  "name": "iron-socket-io-client",
+  "homepage": "https://github.com/Collaborne/iron-socket-io-client",
+  "authors": [
+    "Ronny Roeller <ronny@collaborne.com>"
+  ],
+  "description": "Polymer element to connect to socket.IO WebSocket",
+  "main": "iron-socket-io-client.html",
+  "keywords": [
+    "Polymer",
+    "WebSocket",
+    "Web",
+    "Components",
+    "SocketIO"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "socket.io-client": "^2.0.2"
+  }
+}

@@ -1,0 +1,107 @@
+<!doctype html>
+<link rel="import" href="../polymer/polymer-element.html">
+<script src="../socket.io-client/dist/socket.io.js"></script>
+
+<dom-module id="iron-socket-io-client">
+
+	<script>
+		/**
+		 * Element that connects via Socket.IO to a WebSocket endpoint.
+		 * It allows sending messages, adding handlers, and exposes the
+		 * connect state.
+		 */
+		class IronSocketIoClient extends Polymer.Element {
+
+			constructor() {
+				super();
+			}
+			
+			static get is() {
+				return 'iron-socket-io-client';
+			}
+
+			static get properties() {
+				return {
+					/**
+					 * Current connection status. Can be "connected", "disconnected", or "reconnecting".
+					 */
+					status: {
+						type: String,
+						notify: true,
+					},
+
+					/**
+					 * Internal reference to the WebSocket
+					 */
+					_socket: Object,
+
+					/**
+					 * Registered _handlers by message type
+					 * @type {<String, Function>[]}
+					 */
+					 _handlers: {
+						type: Object,
+						value: [],
+					},
+				};
+			}
+
+			connect(connectUri, token) {
+				this._socket = io(connectUri, {
+					'query': `token=${token}`,
+					timeout: 2000,
+				});
+
+				// Parse response messages retrieving 'type' 
+				this._socket.on('message', message => {
+					// Execute all handlers that are registered for this namespace
+					for (let handler of this._handlers) {
+						if (message.type.startsWith(handler.messageType)) {
+							handler.handler(message);
+						}
+					}
+				});
+
+				// Register listeners to expose connection status
+				this._socket.on('connect', () => this.status = 'connected');
+				this._socket.on('disconnect', () => this.status = 'disconnected');
+				this._socket.on('connect_error', () => this.status = 'disconnected');
+				this._socket.on('reconnecting', () => this.status = 'reconnecting');
+				this._socket.on('reconnect', () => this.status = 'connected');
+
+				this._socket.on('error', e => {
+					console.warn(`WebSocket error: ${JSON.stringify(e)}`);
+				});
+			}
+
+			/**
+			 * Sends a message to the WebSocket
+			 */
+			send(message) {
+				if (!this._socket) {
+					throw new Error('Can\'t send messages before connecting to the WebSocket.');
+				}
+
+				this._socket.send(message);
+			}
+
+			/**
+			 * Registers a handler for a message type
+			 *
+			 * @param {String} messageType	Type of the message for which a handler should be registered.
+			 * 	This can be a namespace.
+			 * @param {Function} handler	Handler called when a message of a specific type arrives
+			 */
+			registerHandler(messageType, handler) {
+				this._handlers.push({
+					messageType,
+					handler,
+				});
+			}
+
+		}
+		customElements.define(IronSocketIoClient.is, IronSocketIoClient);
+
+	</script>
+
+</dom-module>
