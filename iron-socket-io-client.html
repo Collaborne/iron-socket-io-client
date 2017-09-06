@@ -79,7 +79,7 @@
 			 */
 			send(message) {
 				if (!this._socket) {
-					throw new Error('Can\'t send messages before connecting to the WebSocket.');
+					throw new Error('Cannot send messages before connecting to the WebSocket.');
 				}
 
 				this._socket.send(message);
