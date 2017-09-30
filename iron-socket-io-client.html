@@ -53,12 +53,17 @@
 				});
 
 				// Parse response messages retrieving 'type' 
-				this._socket.on('message', message => {
+				this._socket.on('message', (message, callback) => {
 					// Execute all handlers that are registered for this namespace
 					for (let handler of this._handlers) {
 						if (message.type.startsWith(handler.messageType)) {
 							handler.handler(message);
 						}
+					}
+
+					// Acknologe receiving the message (if the SocketIO server supports this)
+					if (callback) {
+						callback();
 					}
 				});
 
