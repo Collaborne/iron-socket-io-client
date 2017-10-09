@@ -48,8 +48,14 @@
 
 			connect(connectUri, token) {
 				this._socket = io(connectUri, {
-					'query': `token=${token}`,
 					timeout: 2000,
+					transportOptions: {
+						polling: {
+							extraHeaders: {
+								authorization: `Bearer ${token}`,
+							},
+						},
+					},
 				});
 
 				// Parse response messages retrieving 'type' 
