@@ -67,6 +67,8 @@
 						}
 					}
 
+					this._lastKnownMessageId = message.id;
+
 					// Acknologe receiving the message (if the SocketIO server supports this)
 					if (callback) {
 						callback();
@@ -74,7 +76,22 @@
 				});
 
 				// Register listeners to expose connection status
-				this._socket.on('connect', () => this.status = 'connected');
+				this._socket.on('connect', () => {
+					if (this._previouslyConnected) {
+						this.dispatchEvent(new CustomEvent('iron-socket-io-client-reconnect', {
+							detail: {
+								lastKnownMessageId: this._lastKnownMessageId,
+							},
+							bubbles: true,
+							composed: true
+						}));
+					} else {
+						// first connection; any further connections means we disconnected
+						this._previouslyConnected = true;
+					}
+					
+					this.status = 'connected';
+				});
 				this._socket.on('disconnect', () => this.status = 'disconnected');
 				this._socket.on('connect_error', () => this.status = 'disconnected');
 				this._socket.on('reconnecting', () => this.status = 'reconnecting');
@@ -88,12 +105,20 @@
 			/**
 			 * Sends a message to the WebSocket
 			 */
-			send(message) {
+			 send(message) {
 				if (!this._socket) {
 					throw new Error('Cannot send messages before connecting to the WebSocket.');
 				}
 
 				this._socket.send(message);
+			}
+
+			emit(type, message) {
+				if (!this._socket) {
+					throw new Error('Cannot emit messages before connecting to the WebSocket.');
+				}
+
+				this._socket.emit(type, message);
 			}
 
 			/**
