@@ -91,6 +91,10 @@
 					}
 					
 					this.status = 'connected';
+					this.dispatchEvent(new CustomEvent('iron-socket-io-client-connected', {
+						bubbles: true,
+						composed: true,
+					}));
 				});
 				this._socket.on('disconnect', () => this.status = 'disconnected');
 				this._socket.on('connect_error', () => this.status = 'disconnected');
