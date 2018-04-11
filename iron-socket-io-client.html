@@ -46,17 +46,25 @@
 				};
 			}
 
+			_createSocketOptions(token) {
+				const options = {
+					timeout: 2000
+				};
+				if (token) {
+					options.transportOptions = { 
+						polling: { 
+							extraHeaders: { 
+								authorization: `Bearer ${token}`, 
+							}, 
+						}, 
+					};
+				}
+				return options;
+			}
+
 			connect(connectUri, token) {
-				this._socket = io(connectUri, {
-					timeout: 2000,
-					transportOptions: {
-						polling: {
-							extraHeaders: {
-								authorization: `Bearer ${token}`,
-							},
-						},
-					},
-				});
+				const options = this._createSocketOptions(token);
+				this._socket = io(connectUri, options);
 
 				// Parse response messages retrieving 'type' 
 				this._socket.on('message', (message, callback) => {
