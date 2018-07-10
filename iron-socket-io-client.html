@@ -119,7 +119,7 @@
 			 */
 			 send(message) {
 				if (!this._socket) {
-					throw new Error('Cannot send messages before connecting to the WebSocket.');
+					throw new Error(`Cannot send messages before connecting to the WebSocket. Failed to send: ${JSON.stringify(message)}`);
 				}
 
 				this._socket.send(message);
@@ -127,7 +127,7 @@
 
 			emit(type, message) {
 				if (!this._socket) {
-					throw new Error('Cannot emit messages before connecting to the WebSocket.');
+					throw new Error(`Cannot emit messages before connecting to the WebSocket. Failed to send: ${JSON.stringify(message)}`);
 				}
 
 				this._socket.emit(type, message);
