@@ -117,7 +117,7 @@
 			/**
 			 * Sends a message to the WebSocket
 			 */
-			 send(message) {
+			send(message) {
 				if (!this._socket) {
 					throw new Error(`Cannot send messages before connecting to the WebSocket. Failed to send: ${JSON.stringify(message)}`);
 				}
