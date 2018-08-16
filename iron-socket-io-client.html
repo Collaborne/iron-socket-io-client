@@ -104,7 +104,16 @@
 						composed: true,
 					}));
 				});
-				this._socket.on('disconnect', () => this.status = 'disconnected');
+				this._socket.on('disconnect', reason => {
+					if (reason === 'io server disconnect') {
+						this.status = 'disconnected';
+
+						// the disconnection was initiated by the server, you need to reconnect manually
+						return this._socket.connect();
+					}
+
+					this.status = 'disconnected';
+				});
 				this._socket.on('connect_error', () => this.status = 'disconnected');
 				this._socket.on('reconnecting', () => this.status = 'reconnecting');
 				this._socket.on('reconnect', () => this.status = 'connected');
