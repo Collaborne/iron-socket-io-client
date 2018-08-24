@@ -1,4 +1,6 @@
-# iron-socket-io-client [![Build Status](https://travis-ci.org/Collaborne/iron-socket-io-client.svg?branch=master)](https://travis-ci.org/Collaborne/iron-socket-io-client) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Collaborne/iron-socket-io-client)
+# iron-socket-io-client [![Build Status](https://travis-ci.org/Collaborne/iron-socket-io-client.svg?branch=master)](https://travis-ci.org/Collaborne/iron-socket-io-client) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Collaborne/iron-socket-io-client)  
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/Collaborneiron-socket-io-client)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/Collaborneiron-socket-io-client.svg)](https://vaadin.com/directory/component/Collaborneiron-socket-io-client)
 
 Polymer element to connect to socket-IO
 
