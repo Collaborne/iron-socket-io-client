@@ -58,12 +58,12 @@
 					timeout: 2000
 				}, options);
 				if (token) {
-					socketOptions.transportOptions = { 
-						polling: { 
-							extraHeaders: { 
-								authorization: `Bearer ${token}`, 
-							}, 
-						}, 
+					socketOptions.transportOptions = {
+						polling: {
+							extraHeaders: {
+								authorization: `Bearer ${token}`,
+							},
+						},
 					};
 				}
 				return socketOptions;
@@ -73,7 +73,7 @@
 				const socketOptions = this._createSocketOptions(token, options);
 				this._socket = io(connectUri, socketOptions);
 
-				// Parse response messages retrieving 'type' 
+				// Parse response messages retrieving 'type'
 				this._socket.on('message', (message, callback) => {
 					// Execute all handlers that are registered for this namespace
 					for (let handler of this._handlers) {
