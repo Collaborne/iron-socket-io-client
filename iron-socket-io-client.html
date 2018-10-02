@@ -120,6 +120,11 @@
 
 				this._socket.on('error', e => {
 					console.warn(`WebSocket error: ${JSON.stringify(e)}`);
+					this.dispatchEvent(new CustomEvent('iron-socket-io-client-error', {
+						detail: e,
+						bubbles: true,
+						composed: true
+					}));
 				});
 			}
 
