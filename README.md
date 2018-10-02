@@ -10,6 +10,15 @@ This element uses Polymer 2 native classes (ES6 syntax).
 
 `bower install --save Collaborne/iron-socket-io-client`
 
+## Usage
+
+The component provides an imperative interface to connect to a Socket.IO server. The messages emitted by the server must use the event `message`, and must be objects with minimally a `type` property. Handlers can be defined based on (a prefix of) the `type` property of the messages.
+
+1. Embed the component
+2. Call `invoke(uri, [token])` to connect to the `/socket.io/` location at the given URI. The optional `token` argument will be used as 'Bearer' token in the `authorization` header of the initial request.
+3. Call `registerHandler(typePrefix, handler)` to receive messages with their `type` property starting the with the prefix `typePrefix`. The handler is invoked with the complete message as argument, and any return value of the handler is ignored. All handlers matching a message are involved in the order of registration.
+4. Call `send(message)` to send `message` events to the server, or `emit(type, message)` to emit events with the given type.
+
 ## License
 
     This software is licensed under the Apache 2 license, quoted below.
