@@ -53,12 +53,12 @@
 				};
 			}
 
-			_createSocketOptions(token) {
-				const options = {
+			_createSocketOptions(token, options) {
+				const socketOptions = Object.assign({
 					timeout: 2000
-				};
+				}, options);
 				if (token) {
-					options.transportOptions = { 
+					socketOptions.transportOptions = { 
 						polling: { 
 							extraHeaders: { 
 								authorization: `Bearer ${token}`, 
@@ -66,12 +66,12 @@
 						}, 
 					};
 				}
-				return options;
+				return socketOptions;
 			}
 
-			connect(connectUri, token) {
-				const options = this._createSocketOptions(token);
-				this._socket = io(connectUri, options);
+			connect(connectUri, token, options) {
+				const socketOptions = this._createSocketOptions(token, transports, options);
+				this._socket = io(connectUri, socketOptions);
 
 				// Parse response messages retrieving 'type' 
 				this._socket.on('message', (message, callback) => {
