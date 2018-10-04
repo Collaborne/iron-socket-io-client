@@ -70,7 +70,7 @@
 			}
 
 			connect(connectUri, token, options) {
-				const socketOptions = this._createSocketOptions(token, transports, options);
+				const socketOptions = this._createSocketOptions(token, options);
 				this._socket = io(connectUri, socketOptions);
 
 				// Parse response messages retrieving 'type' 
